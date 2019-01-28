@@ -1,5 +1,7 @@
 package com.library.LibraryManagements.student;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,9 +29,31 @@ public class StudentController {
 		try {
 			customResponse=studentService.registerNewStudent(student);
 		}catch (LibraryException e) {
-			throw new LibraryException("Getting Error While Registering User", e);
+			throw new LibraryException("Getting Error While Registering Student", e);
 		}
 		return customResponse;
+	}
+	
+	@RequestMapping(value = "/searchStudentByName", method = RequestMethod.GET)
+	public List<Student> findStudentByName(String namePattern) {
+		List<Student> studentList=null;
+		try {
+			studentList=studentService.findStudentByName(namePattern);
+		}catch (LibraryException e) {
+			throw new LibraryException("Getting Error While Fetcning  Student By Name", e);
+		}
+		return studentList;
+	}
+	
+	@RequestMapping(value = "/searchStudentByUSN", method = RequestMethod.GET)
+	public Student findStudentByUSN(String usn) {
+		Student student=null;
+		try {
+			student=studentService.findStudentByUSN(usn);
+		}catch (LibraryException e) {
+			throw new LibraryException("Getting Error While fetching Student By USN", e);
+		}
+		return student;
 	}
 		
 	

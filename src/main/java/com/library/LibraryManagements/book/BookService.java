@@ -33,4 +33,12 @@ public class BookService {
 		}
 		return bookDaoImpl.addBook(bookList);
 	}
+
+	public List<Book> searchBookByName(String bookNamePattern) {
+		return bookDaoImpl.searchBookByName(bookNamePattern);
+	}
+
+	public List<Book> searchBookByAuthorName(String authorNamePattern) {
+		return bookDaoImpl.searchBookByAuthorName(authorNamePattern);
+	}
 }

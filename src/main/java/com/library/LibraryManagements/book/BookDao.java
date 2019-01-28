@@ -9,4 +9,8 @@ public interface BookDao {
 
 	CustomResponse addBook(List<Book> book);
 
+	List<Book> searchBookByName(String bookNamePattern);
+
+	List<Book> searchBookByAuthorName(String authorNamePattern);
+
 }

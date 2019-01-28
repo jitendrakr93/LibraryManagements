@@ -1,5 +1,7 @@
 package com.library.LibraryManagements.book;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +31,28 @@ public class BookController {
 		}
 		return customResponse;
 	}
+	
+	@RequestMapping(value = "/searchBookByName", method = RequestMethod.GET)
+	public List<Book> searchBookByName(String bookNamePattern) {
+		List<Book> bookList=null;
+		try {
+			bookList=bookService.searchBookByName(bookNamePattern);
+		}catch (LibraryException e) {
+			throw new LibraryException("Getting Error While Searching Book by Name", e);
+		}
+		return bookList;
+	}
+	
+	@RequestMapping(value = "/searchBookByAuthorName", method = RequestMethod.GET)
+	public List<Book> searchBookByAuthorName(String authorNamePattern) {
+		List<Book> bookList=null;
+		try {
+			bookList=bookService.searchBookByAuthorName(authorNamePattern);
+		}catch (LibraryException e) {
+			throw new LibraryException("Getting Error While Searching Book by Author Name", e);
+		}
+		return bookList;
+	}
+	
+	
 }
