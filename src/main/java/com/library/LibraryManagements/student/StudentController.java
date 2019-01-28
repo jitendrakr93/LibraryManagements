@@ -1,6 +1,7 @@
 package com.library.LibraryManagements.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +12,7 @@ import com.library.LibraryManagements.exception.LibraryException;
 import com.library.LibraryManagements.student.vo.Student;
 import com.library.LibraryManagements.utils.CustomResponse;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/student")
 public class StudentController {
