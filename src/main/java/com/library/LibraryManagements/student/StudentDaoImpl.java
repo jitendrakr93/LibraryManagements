@@ -13,6 +13,7 @@ import com.library.LibraryManagements.constants.ResponseConstants;
 import com.library.LibraryManagements.exception.LibraryException;
 import com.library.LibraryManagements.mongodb.utils.MongoDBUtil;
 import com.library.LibraryManagements.student.vo.Student;
+import com.library.LibraryManagements.utils.AutoIncrement;
 import com.library.LibraryManagements.utils.CustomResponse;
 
 @Component("studentDaoImpl")
@@ -44,6 +45,8 @@ public class StudentDaoImpl implements StudentDao {
 				}
 
 			} else {
+				long studentId=AutoIncrement.getNextSequenceForStudentId();
+				student.setStudentId(studentId);
 				new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.STUDENT_DETAILS).insert(student);
 				customresponse.setStatusCode(ResponseConstants.SUCCESS);
 				customresponse.setStatusMessage(ResponseConstants.REGISTRATION_SUCCESS);

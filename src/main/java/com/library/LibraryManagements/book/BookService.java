@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.library.LibraryManagements.bookvo.Book;
+import com.library.LibraryManagements.utils.AutoIncrement;
 import com.library.LibraryManagements.utils.CustomResponse;
 
 @Service("bookService")
@@ -21,7 +22,8 @@ public class BookService {
 		List<Book> bookList=new ArrayList<>();
 		for(int i=1;i<=countOfBook;i++) {
 			Book bookObject=new Book();
-			bookObject.setBookId(book.getBookId());
+			long bookId=AutoIncrement.getNextSequenceBookId();
+			bookObject.setBookId(bookId);
 			bookObject.setBookName(book.getBookName());
 			bookObject.setAuthorName(book.getAuthorName());
 			bookObject.setBookMasterType(book.getBookMasterType());

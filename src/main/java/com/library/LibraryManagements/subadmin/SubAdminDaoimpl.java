@@ -8,6 +8,7 @@ import com.library.LibraryManagements.constants.ResponseConstants;
 import com.library.LibraryManagements.exception.LibraryException;
 import com.library.LibraryManagements.mongodb.utils.MongoDBUtil;
 import com.library.LibraryManagements.subadminvo.SubAdmin;
+import com.library.LibraryManagements.utils.AutoIncrement;
 import com.library.LibraryManagements.utils.CustomResponse;
 
 @Component("subAdminDaoImpl")
@@ -23,6 +24,8 @@ public class SubAdminDaoimpl implements SubAdminDao{
 				subAdminFromDb=new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.SUB_ADMIN_DETAILS).findOne("{subAdminMobileNo:#}", subAdmin.getSubAdminMobileNo())
 						.as(SubAdmin.class);
 				if(subAdminFromDb == null) {
+					long subAdminId=AutoIncrement.getNextSequenceForSubAdminId();
+					subAdmin.setSubAdminId(subAdminId);
 					new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.SUB_ADMIN_DETAILS).insert(subAdmin);
 					customResponse.setStatusCode(ResponseConstants.SUCCESS);
 					customResponse.setStatusMessage(ResponseConstants.REGISTRATION_SUCCESS);
