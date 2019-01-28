@@ -17,9 +17,24 @@ public class SubAdminDaoimpl implements SubAdminDao{
 	public CustomResponse registerSubAdmin(SubAdmin subAdmin) {
 		CustomResponse customResponse=new CustomResponse();
 		try {
-			new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.SUB_ADMIN_DETAILS).insert(subAdmin);
-			customResponse.setStatusCode(ResponseConstants.SUCCESS);
-			customResponse.setStatusMessage(ResponseConstants.REGISTRATION_SUCCESS);
+			SubAdmin subAdminFromDb=new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.SUB_ADMIN_DETAILS).findOne("{subAdminEmail:#}", subAdmin.getSubAdminEmail())
+					.as(SubAdmin.class);
+			if(subAdminFromDb == null) {
+				subAdminFromDb=new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.SUB_ADMIN_DETAILS).findOne("{subAdminMobileNo:#}", subAdmin.getSubAdminMobileNo())
+						.as(SubAdmin.class);
+				if(subAdminFromDb == null) {
+					new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.SUB_ADMIN_DETAILS).insert(subAdmin);
+					customResponse.setStatusCode(ResponseConstants.SUCCESS);
+					customResponse.setStatusMessage(ResponseConstants.REGISTRATION_SUCCESS);
+				}else {
+					customResponse.setStatusCode(ResponseConstants.DATA_ALREADY_EXISTS);
+					customResponse.setStatusMessage(ResponseConstants.PHONE_EXISTS);
+				}
+			}else {
+				customResponse.setStatusCode(ResponseConstants.DATA_ALREADY_EXISTS);
+				customResponse.setStatusMessage(ResponseConstants.EMAIL_EXISTS);
+			}
+			
 		}catch (LibraryException e) {
 			throw new LibraryException("Getting Exception While Storing Sub Admin Details into db", e);
 		}

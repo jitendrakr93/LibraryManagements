@@ -13,5 +13,6 @@ public class ResponseConstants {
 	public static final String REGISTRATION_SUCCESS="Registration Successful";
 	public static final String LOGIN_SUCCESS="Login Successful";
 	public static final String INVALID_CREDENTIAL="Invalid Credential";
+	public static final String USN_EXISTS = "Student USN already exists";
 
 }

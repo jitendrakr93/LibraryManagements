@@ -13,7 +13,7 @@ import com.library.LibraryManagements.utils.CustomResponse;
 
 @CrossOrigin
 @RestController
-@RequestMapping("subadmin")
+@RequestMapping("/subadmin")
 public class SubAdminController {
 
 	@Autowired

@@ -16,7 +16,7 @@ public class StudentDaoImpl implements StudentDao{
 	@Override
 	public CustomResponse registerNewStudent(Student student) {
 		CustomResponse customresponse = new CustomResponse();		{
-			Student existingStudent = new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.STUDENT_DETAILS).findOne("{$or:[{email:#},{mobileNo:#}]}",student.getEmailId(),student.getMobileNo()).as(Student.class);
+			Student existingStudent = new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.STUDENT_DETAILS).findOne("{$or:[{email:#},{mobileNo:#},{studentUsn:#}]}",student.getEmailId(),student.getMobileNo(),student.getStudentUsn()).as(Student.class);
 
 			if (existingStudent !=null) {
 				
@@ -27,6 +27,9 @@ public class StudentDaoImpl implements StudentDao{
 				if (existingStudent.getEmailId().equals(student.getEmailId())) {
 					customresponse.setStatusCode(ResponseConstants.DATA_ALREADY_EXISTS);
 					customresponse.setStatusMessage(ResponseConstants.EMAIL_EXISTS);
+				}if (existingStudent.getStudentUsn().equals(student.getStudentUsn())) {
+					customresponse.setStatusCode(ResponseConstants.DATA_ALREADY_EXISTS);
+					customresponse.setStatusMessage(ResponseConstants.USN_EXISTS);
 				}
 
 			} else {
