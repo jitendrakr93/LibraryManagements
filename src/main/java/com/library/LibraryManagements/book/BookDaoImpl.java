@@ -19,7 +19,7 @@ import com.library.LibraryManagements.utils.CustomResponse;
 public class BookDaoImpl implements BookDao{
 
 	@Override
-	public CustomResponse addBook(List<Book> book) {
+	public CustomResponse addBook(List<Book> book) throws LibraryException{
 		CustomResponse customResponse=new CustomResponse();
 		new Jongo(MongoDBUtil.getDB()).getCollection(MongoCollectionConstants.BOOK_BASE_DATA).insert(book.toArray());
 		customResponse.setStatusCode(ResponseConstants.SUCCESS);
@@ -28,7 +28,7 @@ public class BookDaoImpl implements BookDao{
 	}
 
 	@Override
-	public List<Book> searchBookByName(String bookNamePattern) {
+	public List<Book> searchBookByName(String bookNamePattern) throws LibraryException{
 		List<Book> bookList = new ArrayList<>();
 		try {
 			Iterator<Book> existingBook = new Jongo(MongoDBUtil.getDB())
@@ -46,7 +46,7 @@ public class BookDaoImpl implements BookDao{
 	}
 
 	@Override
-	public List<Book> searchBookByAuthorName(String authorNamePattern) {
+	public List<Book> searchBookByAuthorName(String authorNamePattern) throws LibraryException{
 		List<Book> bookList = new ArrayList<>();
 		try {
 			Iterator<Book> existingBook = new Jongo(MongoDBUtil.getDB())
@@ -61,6 +61,24 @@ public class BookDaoImpl implements BookDao{
 		}
 
 		return bookList;
+	}
+
+	@Override
+	public List<BookCategory> getBookCategory() throws LibraryException{
+		List<BookCategory> bookListCategory = new ArrayList<>();
+		try {
+			Iterator<BookCategory> existingBookCategory = new Jongo(MongoDBUtil.getDB())
+					.getCollection(MongoCollectionConstants.BOOK_CATEGORY)
+					.find("{}").as(BookCategory.class).iterator();
+			while (existingBookCategory.hasNext()) {
+				BookCategory bookCategory = existingBookCategory.next();
+				bookListCategory.add(bookCategory);
+			}
+		} catch (LibraryException e) {
+			throw new LibraryException("Getting Error While Searching Book By Author Name", e);
+		}
+
+		return bookListCategory;
 	}
 
 }

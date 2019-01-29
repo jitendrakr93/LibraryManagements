@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.library.LibraryManagements.bookvo.Book;
+import com.library.LibraryManagements.exception.LibraryException;
 import com.library.LibraryManagements.utils.AutoIncrement;
 import com.library.LibraryManagements.utils.CustomResponse;
 
@@ -16,7 +17,7 @@ public class BookService {
 	@Autowired
 	BookDao bookDaoImpl;
 
-	public CustomResponse addBook(Book book) {
+	public CustomResponse addBook(Book book) throws LibraryException{
 		
 		int countOfBook=book.getBookQuantity();
 		List<Book> bookList=new ArrayList<>();
@@ -36,11 +37,15 @@ public class BookService {
 		return bookDaoImpl.addBook(bookList);
 	}
 
-	public List<Book> searchBookByName(String bookNamePattern) {
+	public List<Book> searchBookByName(String bookNamePattern)throws LibraryException {
 		return bookDaoImpl.searchBookByName(bookNamePattern);
 	}
 
-	public List<Book> searchBookByAuthorName(String authorNamePattern) {
+	public List<Book> searchBookByAuthorName(String authorNamePattern) throws LibraryException{
 		return bookDaoImpl.searchBookByAuthorName(authorNamePattern);
+	}
+
+	public List<BookCategory> getBookCategory() throws LibraryException{
+		return bookDaoImpl.getBookCategory();
 	}
 }

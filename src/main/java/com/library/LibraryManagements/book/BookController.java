@@ -2,6 +2,7 @@ package com.library.LibraryManagements.book;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,13 +22,15 @@ public class BookController {
 	@Autowired
 	BookService bookService;
 	
+	private static final Logger logger = Logger.getLogger(BookController.class);
+	
 	@RequestMapping(value = "/addbook", method = RequestMethod.POST, headers = "Accept=application/json")
 	public CustomResponse addBook(@RequestBody Book book) {
 		CustomResponse customResponse=null;
 		try {
 			customResponse=bookService.addBook(book);
 		}catch (LibraryException e) {
-			throw new LibraryException("Getting Error While Adding Book", e);
+			logger.error("Getting Error While Adding Book", e);
 		}
 		return customResponse;
 	}
@@ -38,7 +41,7 @@ public class BookController {
 		try {
 			bookList=bookService.searchBookByName(bookNamePattern);
 		}catch (LibraryException e) {
-			throw new LibraryException("Getting Error While Searching Book by Name", e);
+			logger.error("Getting Error While Searching Book by Name", e);
 		}
 		return bookList;
 	}
@@ -49,10 +52,20 @@ public class BookController {
 		try {
 			bookList=bookService.searchBookByAuthorName(authorNamePattern);
 		}catch (LibraryException e) {
-			throw new LibraryException("Getting Error While Searching Book by Author Name", e);
+			logger.error("Getting Error While Searching Book by Author Name", e);
 		}
 		return bookList;
 	}
 	
+	@RequestMapping(value = "/getBookCategory", method = RequestMethod.GET)
+	public List<BookCategory> getBookCategory() {
+		List<BookCategory> bookCategoryList=null;
+		try {
+			bookCategoryList=bookService.getBookCategory();
+		}catch (LibraryException e) {
+			logger.error("Getting Error While getting book category", e);
+		}
+		return bookCategoryList;
+	}
 	
 }
