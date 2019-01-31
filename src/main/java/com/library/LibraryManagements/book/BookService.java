@@ -32,6 +32,7 @@ public class BookService {
 			bookObject.setPerUnitPrice(book.getPerUnitPrice());
 			bookObject.setBookQuantity(1);
 			bookObject.setIssuedStatus(false);
+			bookObject.setBookCategoryId(book.getBookCategoryId());
 			bookList.add(bookObject);
 		}
 		return bookDaoImpl.addBook(bookList);

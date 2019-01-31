@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.library.LibraryManagements.bookvo.Book;
 import com.library.LibraryManagements.exception.LibraryException;
 import com.library.LibraryManagements.utils.CustomResponse;
@@ -28,6 +29,7 @@ public class BookController {
 	public CustomResponse addBook(@RequestBody Book book) {
 		CustomResponse customResponse=null;
 		try {
+			System.out.println("---->"+new Gson().toJson(book));
 			customResponse=bookService.addBook(book);
 		}catch (LibraryException e) {
 			logger.error("Getting Error While Adding Book", e);

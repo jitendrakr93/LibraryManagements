@@ -6,6 +6,7 @@ public class Book {
 	private String authorName;
 	private String bookMasterType;
 	private String bookCategoryName;
+	private int bookCategoryId;
 	private double perUnitPrice;
 	private int bookQuantity;
 	private boolean issuedStatus;
@@ -39,6 +40,12 @@ public class Book {
 	public void setBookCategoryName(String bookCategoryName) {
 		this.bookCategoryName = bookCategoryName;
 	}
+	public int getBookCategoryId() {
+		return bookCategoryId;
+	}
+	public void setBookCategoryId(int bookCategoryId) {
+		this.bookCategoryId = bookCategoryId;
+	}
 	public double getPerUnitPrice() {
 		return perUnitPrice;
 	}
@@ -58,5 +65,5 @@ public class Book {
 		this.issuedStatus = issuedStatus;
 	}
 	
-
+	
 }
